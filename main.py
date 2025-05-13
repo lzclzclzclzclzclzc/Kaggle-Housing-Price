@@ -55,13 +55,13 @@ class HousePricePredictor:
             else:
                 all_data[col] = all_data[col].fillna(all_data[col].median())
 
-        # Label Encoding
+        # === Label Encoding === #
         categoricals = all_data.select_dtypes(include="object").columns
         for col in categoricals:
             le = LabelEncoder()
             all_data[col] = le.fit_transform(all_data[col])
 
-        # Feature Engineering
+        # === 构建派生特征 === #
         all_data["TotalSF"] = all_data["TotalBsmtSF"] + all_data["1stFlrSF"] + all_data["2ndFlrSF"]
         all_data["TotalBath"] = (
             all_data["FullBath"] + 0.5 * all_data["HalfBath"] +
@@ -69,13 +69,13 @@ class HousePricePredictor:
         )
         all_data["Age"] = all_data["YrSold"] - all_data["YearBuilt"]
 
-        # Standardization
+        # === Standardization === #
         scaler_std = StandardScaler()
         all_data[self.numerical_features_standardize] = scaler_std.fit_transform(
             all_data[self.numerical_features_standardize]
         )
 
-        # Normalization
+        # === Normalization === #
         scaler_minmax = MinMaxScaler()
         all_data[self.numerical_features_normalize] = scaler_minmax.fit_transform(
             all_data[self.numerical_features_normalize]

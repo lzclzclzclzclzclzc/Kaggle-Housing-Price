@@ -1,4 +1,5 @@
 https://www.kaggle.com/competitions/home-data-for-ml-course
+
 SHANGHAI UNIVERSITY
 
 课程设计（论文）
@@ -279,11 +280,11 @@ To better understand the model and data, the research used visual analysis. Both
 
 研究采用Kaggle平台提供的Ames住房数据集，包含训练集（train.csv，1,460条样本）和测试集（test.csv，1,459条样本）。数据加载后，首先对目标变量房屋销售价格（SalePrice）进行分布分析。通过Kolmogorov-Smirnov检验发现其呈现显著右偏分布（偏度=1.8829，峰度=6.5363，K-S检验p值为0.0000），这与城市房地产市场中高价房分布稀疏的特征一致。
 
-图3-1原始SalePrice分布
+![图3-1 原始SalePrice分布](images/图3-1原始SalePrice分布.png)
 
 为缓解偏态分布对回归模型的影响，采用自然对数变换进行数据转换（y = np.log1p(train\["SalePrice"\])。此方法不仅使目标变量更接近正态分布（偏度降至0.1213，峰度降至0.8095，K-S 检验 p 值增加到0.0147），还能降低极端值对损失函数的干扰，提升模型的鲁棒性。
 
-图3-2对数化后SalePrice分布
+![图3-2 对数化后SalePrice分布](images/图3-2对数化后SalePrice分布.png)
 
 随后将原SalePrice列从训练集中移除，以避免在特征工程阶段引入数据泄漏风险。
 
@@ -419,7 +420,7 @@ To better understand the model and data, the research used visual analysis. Both
 
 最佳 RMSE (负数表示越小越好)为 -0.1377026382815109，R²达到了0.9810。在Kaggle网站上提交数据，得分为15914.50449（提交结果的评估标准是预测值的对数与实际销售价格的对数之间的均方根误差（RMSE），分数越小越好）。
 
-图4-1 五折交叉验证下最佳参数组合的Kaggle得分
+![图4-1 五折交叉验证下最佳参数组合的Kaggle得分](images/图4-1五折交叉验证下最佳参数组合的Kaggle得分.png)
 
 再将模型改为十折交叉验证，同样使用与五折最终相同的网格搜索矩阵，即：(1) n_estimators：取值范围为100到500，步长为10；
 
@@ -437,7 +438,8 @@ To better understand the model and data, the research used visual analysis. Both
 
 最佳 RMSE 为-0.13606095839513924l，R²为0.9817，在Kaggle网站上提交后，得分为16085.87081。
 
-图4-2 十折交叉验证下最佳参数组合的Kaggle得分
+
+![图4-2 十折交叉验证下最佳参数组合的Kaggle得分](images/图4-2十折交叉验证下最佳参数组合的Kaggle得分.png)
 
 ## 测试集预测及提交结果
 
@@ -479,17 +481,17 @@ To better understand the model and data, the research used visual analysis. Both
 
 通过 GridSearchCV 对随机森林回归器的多个参数组合进行网格搜索与五折交叉验证，模型在不同参数组合下的 RMSE 变化趋势也通过图表清晰展示，揭示了模型对各超参数的敏感程度。图表如下所示：
 
-图5-1 RMSE随最大深度的变化
+![图5-1 RMSE随最大深度的变化](images/图5-1RMSE随最大深度的变化.png)
 
-图5-2 RMSE随最小划分样本数的变化
+![图5-2 RMSE随最小划分样本数的变化](images/图5-2RMSE随最小划分样本数的变化.png)
 
-图5-3 RMSE树的数量的变化
+![图5-3 RMSE树的数量的变化](images/图5-3RMSE树的数量的变化.png)
 
 ## 特征重要性分析
 
 利用最优模型的 feature_importances_ 属性，对所有特征进行了重要性排序，并可视化前30个特征的贡献度。从结果可见，对房价预测影响最大的变量包括：TotalSF（房屋总使用面积）、OverallQual（整体质量）、GrLivArea（地上居住面积）、YearBuilt（建造年份）、Age（房龄）、TotalBath（总厕所数量）等。其中贡献度最高的前三十个特征如下图所示：
 
-图5-4 贡献度最高的前三十个特征
+![图5-4 贡献度最高的前三十个特征](images/图5-4贡献度最高的前三十个特征.png)
 
 # 总结与展望
 
